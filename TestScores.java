@@ -1,37 +1,51 @@
 
 public class TestScores {
-	//variables
-private double test1;
-private double test2;
-private double test3;
-private double grade;
-//constructor with arguments for test 1, 2, and 3 scores
-	public TestScores(double a, double b, double c) {
-		this.test1 = a;
-		this.test2 = b;
-		this.test3 = c;
+	private double[] testScores;		//holds an array of test scores
+	private double sum;				//holds the sum of the testscores
+	private double average;			//holds the average of the testscores
+	private double count;
+	/**
+	 * constructor that calls fields
+	 * @param testScores
+	 */
+	public TestScores(double[] testScores) {
+		this.testScores = testScores;
+		sum = 0;
+		average = 0;
 	}
-//method to find out average between the 3 tests.
-public double averageTest() {
-	return (test1 + test2 + test3) / 3.0;
-}
-
-public String letterGrade(double a) {
-	this.grade = a;
-	String letterGrade = "";
-	if (grade >= 90) {
-		letterGrade = "A";
-	} else if (grade >= 80) {
-		letterGrade = "B";
-	} else if (grade >= 70) {
-		letterGrade = "C";
-	} else if (grade >= 60) {
-		letterGrade = "D";
-	} else {
-		letterGrade = "F";
+	/**
+	 * adds test scores to sum and throws error if score is negative or above 100
+	 * @throws InvalidTestScore
+	 */
+	public void setSum() throws InvalidTestScore{
+		try{
+		for (int i = 0; i < testScores.length; i++) {
+			if (testScores[i] < 0 || testScores[i] > 100) {
+				throw new InvalidTestScore(testScores[i]);
+			} else {
+				sum += testScores[i];
+				count++;
+			}
+		}
+		} catch(InvalidTestScore e) {
+			System.out.println(e.getMessage());
+		}
+		
 	}
-	return letterGrade;
-}
-
+	/**
+	 * returns sum
+	 * @return
+	 */
+	public double getSum() {
+		return sum;
+	}
+	/**
+	 * gets average of all test scores
+	 * @return
+	 */
+	public double getAverage() {
+		average = sum / count;
+		return average;
+	}
 
 }
